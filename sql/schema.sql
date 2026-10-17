@@ -1,5 +1,5 @@
 -- Book Catalogue database schema
--- Run this once in phpMyAdmin (or the mysql client) on mi-linux.
+-- Run this once in phpMyAdmin (http://localhost/phpmyadmin) inside the book_catalogue database.
 
 DROP TABLE IF EXISTS books;
 DROP TABLE IF EXISTS users;

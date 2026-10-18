@@ -24,18 +24,21 @@ $books = $result->fetchAll();
             <th>Author</th>
             <th>Genre</th>
             <th>Year</th>
+            <th>Edit</th>
         </tr>
 
 
-        <?php 
+        <?php
         // table for books
-        
+
         foreach ($books as $book) { ?>
             <tr>
                 <td><?php echo $book['title']; ?></td>
                 <td><?php echo $book['author']; ?></td>
                 <td><?php echo $book['genre']; ?></td>
                 <td><?php echo $book['year']; ?></td>
+                <td><a href="edit.php?id=<?php echo $book['id']; ?>">Edit</a></td>
+
             </tr>
         <?php } ?>
 

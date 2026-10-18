@@ -25,6 +25,7 @@ $books = $result->fetchAll();
             <th>Genre</th>
             <th>Year</th>
             <th>Edit</th>
+            <th>Delete</th>
         </tr>
 
 
@@ -38,6 +39,7 @@ $books = $result->fetchAll();
                 <td><?php echo $book['genre']; ?></td>
                 <td><?php echo $book['year']; ?></td>
                 <td><a href="edit.php?id=<?php echo $book['id']; ?>">Edit</a></td>
+                <td><a href="delete.php?id=<?php echo $book['id']; ?>">Delete</a></td>
 
             </tr>
         <?php } ?>

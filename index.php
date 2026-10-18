@@ -28,7 +28,7 @@ $books = $result->fetchAll();
 
 
         <?php 
-        // table
+        // table for books
         
         foreach ($books as $book) { ?>
             <tr>

@@ -27,7 +27,10 @@ $books = $result->fetchAll();
         </tr>
 
 
-        <?php foreach ($books as $book) { ?>
+        <?php 
+        // table
+        
+        foreach ($books as $book) { ?>
             <tr>
                 <td><?php echo $book['title']; ?></td>
                 <td><?php echo $book['author']; ?></td>

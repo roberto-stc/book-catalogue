@@ -4,6 +4,23 @@
 
 require 'db.php';
 $id = $_GET['id'];
+
+
+// Personal note: this part to save the edited stuff //
+
+if (isset($_POST['title'])) {
+    $title = $_POST['title'];
+    $author = $_POST['author'];
+    $genre = $_POST['genre'];
+    $year = $_POST['year'];
+    $sql = $pdo->prepare("UPDATE books SET title = ?, author = ?, genre = ?, year = ? WHERE id = ?");
+    $sql->execute([$title, $author, $genre, $year, $id]);
+    header("Location: index.php");
+    exit;
+}
+
+// It stops here
+
 $sql = $pdo->prepare("SELECT * FROM books WHERE id = ?");
 $sql->execute([$id]);
 $book = $sql->fetch();

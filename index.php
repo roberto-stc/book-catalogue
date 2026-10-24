@@ -12,6 +12,7 @@ $books = $result->fetchAll();
 
 <head>
     <title>Book Catalogue</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>

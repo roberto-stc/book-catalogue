@@ -26,6 +26,7 @@ $sql->execute([$id]);
 $book = $sql->fetch();
 ?>
 
+<link rel="stylesheet" href="style.css">
 <h1>Edit a Book</h1>
 <form method="post">
 

@@ -19,6 +19,8 @@ $books = $result->fetchAll();
 
     <h1>Book Catalogue</h1>
 
+    <p><a href="search.php">Search books</a></p>
+
     <table border="1">
         <tr>
             <th>Title</th>

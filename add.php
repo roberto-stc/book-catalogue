@@ -24,6 +24,7 @@ if (isset($_POST['title'])) {
 <head>
 
     <title>Add a Book</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -39,4 +40,3 @@ if (isset($_POST['title'])) {
 </body>
 
 </html>
-

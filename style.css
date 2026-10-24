@@ -1,6 +1,6 @@
 body {
     background-color: black;
-    color: white;
+    color: whitesmoke;
 }
 
 a {
@@ -10,5 +10,5 @@ a {
 table,
 th,
 td {
-    border-color: smoke;
+    border-color: whitesmoke;
 }

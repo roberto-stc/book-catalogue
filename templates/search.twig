@@ -7,11 +7,9 @@
 <form method="get" action="search.php">
         
 <label>Genre:</label>
-        
 <input type="text" name="genre" value="{{ genre }}">
         
 <label>Year:</label>
-        
 <input type="text" name="year" value="{{ year }}">
         
 <button type="submit">Search</button>
@@ -30,12 +28,9 @@
         
 <tr>
             
-<th>Title</th>
-            
+<th>Title</th> 
 <th>Author</th>
-            
 <th>Genre</th>
-            
 <th>Year</th>
         
 </tr>
@@ -45,11 +40,8 @@
 <tr>
                 
 <td>{{ book.title }}</td>
-                
 <td>{{ book.author }}</td>
-                
 <td>{{ book.genre }}</td>
-                
 <td>{{ book.year }}</td>
             
 </tr>

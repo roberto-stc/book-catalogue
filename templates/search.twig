@@ -1,0 +1,62 @@
+{% extends 'base.twig' %}
+{% block title %}Search Books{% endblock %}
+{% block content %}
+    
+<h1>Search Books</h1>
+    
+<form method="get" action="search.php">
+        
+<label>Genre:</label>
+        
+<input type="text" name="genre" value="{{ genre }}">
+        
+<label>Year:</label>
+        
+<input type="text" name="year" value="{{ year }}">
+        
+<button type="submit">Search</button>
+    
+</form>
+    
+<h2>Results</h2>
+    
+{% if books|length == 0 %}
+        
+<p>No books found.</p>
+    
+{% endif %}
+    
+<table border="1">
+        
+<tr>
+            
+<th>Title</th>
+            
+<th>Author</th>
+            
+<th>Genre</th>
+            
+<th>Year</th>
+        
+</tr>
+        
+{% for book in books %}
+            
+<tr>
+                
+<td>{{ book.title }}</td>
+                
+<td>{{ book.author }}</td>
+                
+<td>{{ book.genre }}</td>
+                
+<td>{{ book.year }}</td>
+            
+</tr>
+        
+{% endfor %}
+    
+</table>
+    
+<p><a href="index.php">Back to all books</a></p>
+{% endblock %}

@@ -86,6 +86,7 @@ return response.json();
             
 // personal note: clear the old results    
 results.innerHTML = '';
+if (box.value == '') { return; }
 
 // personal note: add one row for each book
 for (const book of books) {

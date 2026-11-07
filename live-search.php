@@ -1,5 +1,11 @@
-
 <?php
+// personal note: only logged-in users can see this page
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
+    exit;
+}
+
 // personal note: to connect to the database
 
 require 'db.php';
@@ -8,7 +14,7 @@ require 'db.php';
 
 $title = '';
 if (isset($_GET['title'])) {
-$title = $_GET['title'];
+    $title = $_GET['title'];
 }
 
 

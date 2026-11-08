@@ -14,7 +14,7 @@ require 'db.php';
 
 $title = '';
 if (isset($_GET['title'])) {
-    $title = $_GET['title'];
+    $title = trim($_GET['title']);
 }
 
 

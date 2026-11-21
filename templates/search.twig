@@ -1,111 +1,59 @@
 {% extends 'base.twig' %}
 {% block title %}Search Books{% endblock %}
 {% block content %}
-    
 <h1>Search Books</h1>
-    
 <h2>Live search by title</h2>
 <input type="text" id="live-title" placeholder="Start typing a title...">
+<p id="live-message"></p>
 <table border="1">
-<tr>
+    
+<tr>   
 <th>Title</th>
 <th>Author</th>
 <th>Genre</th>
 <th>Year</th>
 </tr>
+    
 <tbody id="live-results"></tbody>
 </table>
-
-
-
 <form method="get" action="search.php">
-        
+    
 <label>Genre:</label>
+    
 <input type="text" name="genre" value="{{ genre }}">
-        
+    
 <label>Year:</label>
+    
 <input type="text" name="year" value="{{ year }}">
-        
+    
 <button type="submit">Search</button>
-    
 </form>
-    
 <h2>Results</h2>
-    
 {% if books|length == 0 %}
-        
+    
 <p>No books found.</p>
-    
 {% endif %}
-    
 <table border="1">
-        
-<tr>
-            
+    
+<tr> 
 <th>Title</th> 
-<th>Author</th>
+<th>Author</th> 
 <th>Genre</th>
 <th>Year</th>
-        
 </tr>
-        
+    
 {% for book in books %}
-            
-<tr>
-                
+        
+<tr>        
 <td>{{ book.title }}</td>
-<td>{{ book.author }}</td>
-<td>{{ book.genre }}</td>
+<td>{{ book.author }}</td>   
+<td>{{ book.genre }}</td>   
 <td>{{ book.year }}</td>
-            
 </tr>
-        
+    
 {% endfor %}
-    
 </table>
-    
 <p><a href="index.php">Back to all books</a></p>
-
-<script>
-
-// personal note: find the search box and the empty table body
-const box = document.getElementById('live-title');
-const results = document.getElementById('live-results');
-
-// personal note: every time a key is typed in the box, run this
-box.addEventListener('input', function () {
-    
-// personal note: ask live-search.php for books matching what was typed (this is the Ajax part)
-fetch('live-search.php?title=' + encodeURIComponent(box.value))
-.then(function (response) {
-return response.json();
-        
-})
-        
-.then(function (books) {
-            
-// personal note: clear the old results    
-results.innerHTML = '';
-if (box.value == '') { return; }
-
-// personal note: add one row for each book
-for (const book of books) {
-const row = document.createElement('tr');
-for (const value of [book.title, book.author, book.genre, book.year]) {   
-const cell = document.createElement('td');
-                    
-// personal note: textContent shows the text safely (stops XSS)          
-cell.textContent = value;
-row.appendChild(cell);
-}
-                
-results.appendChild(row);
-            
-}
-        
-});
-});
-
-</script>
-
+<!-- personal note: the live search JavaScript is now in its own file -->
+<script src="live-search.js"></script>
 {% endblock %}

@@ -7,27 +7,28 @@
 <p><a href="search.php">Search books</a></p>
 
 <p><a href="add.php">Add a book</a></p>
-
 <table border="1">
         
-<tr>        
+<tr>
+            
 <th>Title</th>
 <th>Author</th>
 <th>Genre</th>
 <th>Year</th>
 <th>Edit</th>
-<th>Delete</th> 
+<th>Delete</th>
+        
 </tr>
-
 {% for book in books %}
-
-<tr>          
-<td>{{ book.title }}</td>
-<td>{{ book.author }}</td>
-<td>{{ book.genre }}</td>
-<td>{{ book.year }}</td>
-<td><a href="edit.php?id={{ book.id }}">Edit</a></td>
-<td><a href="delete.php?id={{ book.id }}">Delete</a></td>       
+<tr>
+                
+<td>{{ book.title|e }}</td>
+<td>{{ book.author|e }}</td>
+<td>{{ book.genre|e }}</td>
+<td>{{ book.year|e }}</td>
+<td><a href="edit.php?id={{ book.id|e('url') }}">Edit</a></td>
+<td><a href="delete.php?id={{ book.id|e('url') }}">Delete</a></td>
+            
 </tr>
         
 {% endfor %}

@@ -3,14 +3,13 @@
 {% block content %}
     
 <h1>Edit a Book</h1>
-
-<p>{{ message }}</p>
+<p>{{ message|e }}</p>
     
 <form method="post">
-<p>Title: <input type="text" name="title" value="{{ book.title }}"></p>
-<p>Author: <input type="text" name="author" value="{{ book.author }}"></p>
-<p>Genre: <input type="text" name="genre" value="{{ book.genre }}"></p>
-<p>Year: <input type="number" name="year" value="{{ book.year }}"></p>
+<p>Title: <input type="text" name="title" value="{{ book.title|e('html_attr') }}"></p>
+<p>Author: <input type="text" name="author" value="{{ book.author|e('html_attr') }}"></p>
+<p>Genre: <input type="text" name="genre" value="{{ book.genre|e('html_attr') }}"></p>
+<p>Year: <input type="number" name="year" value="{{ book.year|e('html_attr') }}"></p>
 <p><button type="submit">Save</button></p>
 </form>
     

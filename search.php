@@ -1,33 +1,27 @@
 <?php
-// personal note: only logged-in users can see this page
 session_start();
 if (!isset($_SESSION['username'])) {
     header("Location: login.php");
     exit;
 }
-
-// personal note: to connect to the database
 require 'db.php';
-
-// personal note: to load Twig
 require 'twig.php';
 
-// personal note: get what the user typed in the boxes (empty if nothing typed)
 $genre = '';
-$year = '';
 if (isset($_GET['genre'])) {
-    $genre = trim($_GET['genre']);
-}
-if (isset($_GET['year'])) {
-    $year = trim($_GET['year']);
+    $genre = trim(strip_tags($_GET['genre']));
 }
 
-// personal note: if the year is not a number, ignore it
-if (!is_numeric($year)) {
+// personal note: if the genre is too long, ignore it (the longest genre in the database is 50 letters)
+if (strlen($genre) > 50) {
+    $genre = '';
+}
+
+// personal note: VALIDATION - filter_input() checks the year is a whole number (false if not, null if empty)
+$year = filter_input(INPUT_GET, 'year', FILTER_VALIDATE_INT);
+if ($year == false) {
     $year = '';
 }
-
-
 // personal note: start with "all books", then add each filter the user filled in
 $sql = "SELECT * FROM books WHERE 1=1";
 $values = [];
@@ -40,10 +34,7 @@ if ($year != '') {
     $values[] = $year;
 }
 
-// personal note: prepared statement, the ? are filled in safely by execute
 $query = $pdo->prepare($sql);
 $query->execute($values);
 $books = $query->fetchAll();
-
-// personal note: to show the page using the search.twig template
 echo $twig->render('search.twig', ['books' => $books, 'genre' => $genre, 'year' => $year]);

@@ -1,48 +1,40 @@
 <?php
-// personal note: only logged-in users can see this page
 session_start();
 if (!isset($_SESSION['username'])) {
     header("Location: login.php");
     exit;
 }
-
-// personal note: to connect with database
 require 'db.php';
-
-// personal note: to load Twig
 require 'twig.php';
-
 $message = "";
-// personal note: to add a new book, click on the save click
 if (isset($_POST['title'])) {
 
-    // personal note: trim() removes extra spaces at the start and end
-    $title = trim($_POST['title']);
-    $author = trim($_POST['author']);
-    $genre = trim($_POST['genre']);
-    $year = trim($_POST['year']);
+    // SANITISATION
+
+    $title = trim(strip_tags($_POST['title']));
+    $author = trim(strip_tags($_POST['author']));
+    $genre = trim(strip_tags($_POST['genre']));
+    $year = filter_input(INPUT_POST, 'year', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1000, 'max_range' => 2100]]);
 
     // personal note: check 1 - no empty boxes
-    if ($title == "" || $author == "" || $genre == "" || $year == "") {
+    if ($title == "" || $author == "" || $genre == "") {
         $message = "Please fill in all the boxes.";
 
-        // personal note: check 2 - the year must be a number
-    } elseif (!is_numeric($year)) {
-        $message = "The year must be a number.";
+        // personal note: check 2 - the year must be a real year
+    } elseif ($year == false) {
+        $message = "The year must be a number between 1000 and 2100.";
 
-        // personal note: check 3 - the title must not be too long
-    } elseif (strlen($title) > 100) {
-        $message = "The title is too long.";
+        // personal note: check 3 - the text must not be longer than the database allows
+    } elseif (strlen($title) > 200 || strlen($author) > 150 || strlen($genre) > 50) {
+        $message = "Some of the text is too long.";
 
-        // personal note: all good, so save the book
+        // personal note: all good, so save the book (prepared statement stops SQL injection)
     } else {
         $sql = $pdo->prepare("INSERT INTO books (title, author, genre, year) VALUES (?, ?, ?, ?)");
         $sql->execute([$title, $author, $genre, $year]);
         header("Location: index.php");
-
         exit;
     }
 }
 
-// personal note: to show the page using the add.twig template
 echo $twig->render('add.twig', ['message' => $message]);

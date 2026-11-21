@@ -25,12 +25,12 @@
 
 <tr>
                 
-<td>{{ book.title }}</td>
-<td>{{ book.author }}</td>
-<td>{{ book.genre }}</td>
-<td>{{ book.year }}</td>
-<td><a href="edit.php?id={{ book.id }}">Edit</a></td>
-<td><a href="delete.php?id={{ book.id }}">Delete</a></td>
+<td>{{ book.title|e }}</td>
+<td>{{ book.author|e }}</td>
+<td>{{ book.genre|e }}</td>
+<td>{{ book.year|e }}</td>
+<td><a href="edit.php?id={{ book.id|e('url') }}">Edit</a></td>
+<td><a href="delete.php?id={{ book.id|e('url') }}">Delete</a></td>
             
 </tr>
         

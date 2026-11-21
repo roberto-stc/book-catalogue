@@ -12,9 +12,13 @@ $message = "";
 
 // personal note: when the Log in button is clicked
 if (isset($_POST['username'])) {
-    $username = $_POST['username'];
+
+    // personal note: SANITISATION - trim() removes extra spaces at the start and end
+    $username = trim($_POST['username']);
     $password = $_POST['password'];
-    $captcha = $_POST['captcha'];
+
+    // personal note: VALIDATION - the CAPTCHA answer must be a whole number (false if not)
+    $captcha = filter_input(INPUT_POST, 'captcha', FILTER_VALIDATE_INT);
 
 // personal note: find the user with this username
     $sql = $pdo->prepare("SELECT * FROM users WHERE username = ?");
@@ -22,9 +26,11 @@ if (isset($_POST['username'])) {
     $user = $sql->fetch();
 
 // personal note: password_verify checks the typed password against the saved hash
-    if ($captcha != $_SESSION['captcha_answer']) {
+    if (!isset($_SESSION['captcha_answer']) || $captcha !== $_SESSION['captcha_answer']) {
         $message = "Wrong answer to the maths question.";
     } elseif ($user && password_verify($password, $user['password'])) {
+        // personal note: give the user a new session id when they log in (stops session fixation)
+        session_regenerate_id(true);
         $_SESSION['username'] = $user['username'];
         header("Location: index.php");
         exit;

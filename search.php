@@ -12,18 +12,23 @@ require 'db.php';
 // personal note: to load Twig
 require 'twig.php';
 
-// personal note: get what the user typed in the boxes (empty if nothing typed)
+// personal note: SANITISATION - get the genre the user typed and clean it (empty if nothing typed)
+// strip_tags() removes any HTML tags, trim() removes extra spaces
 $genre = '';
-$year = '';
 if (isset($_GET['genre'])) {
-    $genre = trim($_GET['genre']);
-}
-if (isset($_GET['year'])) {
-    $year = trim($_GET['year']);
+    $genre = trim(strip_tags($_GET['genre']));
 }
 
+// personal note: if the genre is too long, ignore it (the longest genre in the database is 50 letters)
+if (strlen($genre) > 50) {
+    $genre = '';
+}
+
+// personal note: VALIDATION - filter_input() checks the year is a whole number (false if not, null if empty)
+$year = filter_input(INPUT_GET, 'year', FILTER_VALIDATE_INT);
+
 // personal note: if the year is not a number, ignore it
-if (!is_numeric($year)) {
+if ($year == false) {
     $year = '';
 }
 

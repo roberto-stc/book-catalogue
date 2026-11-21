@@ -6,6 +6,7 @@
     
 <h2>Live search by title</h2>
 <input type="text" id="live-title" placeholder="Start typing a title...">
+<p id="live-message"></p>
 <table border="1">
 <tr>
 <th>Title</th>
@@ -21,10 +22,10 @@
 <form method="get" action="search.php">
         
 <label>Genre:</label>
-<input type="text" name="genre" value="{{ genre }}">
+<input type="text" name="genre" value="{{ genre|e('html_attr') }}">
         
 <label>Year:</label>
-<input type="text" name="year" value="{{ year }}">
+<input type="text" name="year" value="{{ year|e('html_attr') }}">
         
 <button type="submit">Search</button>
     
@@ -53,10 +54,10 @@
             
 <tr>
                 
-<td>{{ book.title }}</td>
-<td>{{ book.author }}</td>
-<td>{{ book.genre }}</td>
-<td>{{ book.year }}</td>
+<td>{{ book.title|e }}</td>
+<td>{{ book.author|e }}</td>
+<td>{{ book.genre|e }}</td>
+<td>{{ book.year|e }}</td>
             
 </tr>
         
@@ -66,46 +67,7 @@
     
 <p><a href="index.php">Back to all books</a></p>
 
-<script>
-
-// personal note: find the search box and the empty table body
-const box = document.getElementById('live-title');
-const results = document.getElementById('live-results');
-
-// personal note: every time a key is typed in the box, run this
-box.addEventListener('input', function () {
-    
-// personal note: ask live-search.php for books matching what was typed (this is the Ajax part)
-fetch('live-search.php?title=' + encodeURIComponent(box.value))
-.then(function (response) {
-return response.json();
-        
-})
-        
-.then(function (books) {
-            
-// personal note: clear the old results    
-results.innerHTML = '';
-if (box.value == '') { return; }
-
-// personal note: add one row for each book
-for (const book of books) {
-const row = document.createElement('tr');
-for (const value of [book.title, book.author, book.genre, book.year]) {   
-const cell = document.createElement('td');
-                    
-// personal note: textContent shows the text safely (stops XSS)          
-cell.textContent = value;
-row.appendChild(cell);
-}
-                
-results.appendChild(row);
-            
-}
-        
-});
-});
-
-</script>
+<!-- personal note: the live search JavaScript (with the fetch) is in its own file -->
+<script src="live-search.js"></script>
 
 {% endblock %}

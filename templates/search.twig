@@ -1,63 +1,80 @@
 {% extends 'base.twig' %}
 {% block title %}Search Books{% endblock %}
 {% block content %}
-    
-<h1>Search Books</h1>
-    
-<h2>Live search by title</h2>
-<input type="text" id="live-title" placeholder="Start typing a title...">
-<p id="live-message"></p>
-<table border="1">
+
+<h1 class="mb-4">Search Books</h1>
+
+<div class="card p-4 mb-4">
+<h2 class="h5 mb-3">Live search by title</h2>
+<div class="d-flex gap-2 mb-3">
+<input class="form-control" type="text" id="live-title" placeholder="Start typing a title...">
+<a class="btn btn-outline-secondary" href="search.php">Clear</a>
+</div>
+<p class="text-muted" id="live-message"></p>
+<div class="table-responsive">
+<table class="table table-hover align-middle mb-0">
+<thead>
 <tr>
 <th>Title</th>
 <th>Author</th>
 <th>Genre</th>
 <th>Year</th>
 </tr>
+</thead>
 <tbody id="live-results"></tbody>
-
 </table>
-<form method="get" action="search.php">
-        
-<label>Genre:</label>
-<input type="text" name="genre" value="{{ genre|e('html_attr') }}">
-        
-<label>Year:</label>
-<input type="text" name="year" value="{{ year|e('html_attr') }}">
-        
-<button type="submit">Search</button>
+</div>
+</div>
+
+<div class="card p-4">
+<h2 class="h5 mb-3">Search by genre and year</h2>
+<form class="row g-3 align-items-end" method="get" action="search.php">
+<div class="col-md-4">
+<label class="form-label" for="genre">Genre</label>
+<input class="form-control" type="text" id="genre" name="genre" value="{{ genre|e('html_attr') }}">
+</div>
+<div class="col-md-4">
+<label class="form-label" for="year">Year</label>
+<input class="form-control" type="number" id="year" name="year" value="{{ year|e('html_attr') }}">
+</div>
+<div class="col-md-2">
+<button class="btn btn-primary w-100" type="submit">Search</button>
+</div>
+<div class="col-md-2">
+<a class="btn btn-outline-secondary w-100" href="search.php">Clear</a>
+</div>
 </form>
-    
-<h2>Results</h2>
-    
+
+{% if searched %}
+<h3 class="h6 mt-4">Results</h3>
 {% if books|length == 0 %}
-        
-<p>No books found.</p>
-{% endif %}
-    
-<table border="1">
-        
-<tr>       
-<th>Title</th> 
+<p class="text-muted mb-0">No books found.</p>
+{% else %}
+<div class="table-responsive">
+<table class="table table-hover align-middle mb-0">
+<thead>
+<tr>
+<th>Title</th>
 <th>Author</th>
 <th>Genre</th>
-<th>Year</th>   
+<th>Year</th>
 </tr>
-        
+</thead>
+<tbody>
 {% for book in books %}
-            
 <tr>
 <td>{{ book.title|e }}</td>
 <td>{{ book.author|e }}</td>
 <td>{{ book.genre|e }}</td>
 <td>{{ book.year|e }}</td>
 </tr>
-        
 {% endfor %}
-    
+</tbody>
 </table>
-    
-<p><a href="index.php">Back to all books</a></p>
-<!-- personal note: the live search JavaScript (with the fetch) is in its own file -->
+</div>
+{% endif %}
+{% endif %}
+</div>
+
 <script src="live-search.js"></script>
 {% endblock %}

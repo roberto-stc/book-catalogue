@@ -1,37 +1,42 @@
 {% extends 'base.twig' %}
 {% block content %}
-    
+<div class="d-flex justify-content-between align-items-center mb-3">
 <h1>Book Catalogue</h1>
-<p><a href="logout.php">Log out</a></p>
-    
-<p><a href="search.php">Search books</a></p>
+<a class="btn btn-primary" href="add.php">Add a book</a>
+</div>
 
-<p><a href="add.php">Add a book</a></p>
-<table border="1">
-        
+<div class="card p-3">
+<div class="table-responsive">
+<table class="table table-hover align-middle mb-0">
+
+<thead>
 <tr>
-            
 <th>Title</th>
 <th>Author</th>
 <th>Genre</th>
 <th>Year</th>
-<th>Edit</th>
-<th>Delete</th>
-        
+
+<th>Actions</th>
 </tr>
+</thead>
+<tbody>
 {% for book in books %}
+
 <tr>
-                
 <td>{{ book.title|e }}</td>
 <td>{{ book.author|e }}</td>
 <td>{{ book.genre|e }}</td>
 <td>{{ book.year|e }}</td>
-<td><a href="edit.php?id={{ book.id|e('url') }}">Edit</a></td>
-<td><a href="delete.php?id={{ book.id|e('url') }}">Delete</a></td>
-            
+<td>
+
+<a class="btn btn-sm btn-outline-secondary" href="edit.php?id={{ book.id|e('url') }}">Edit</a>
+<a class="btn btn-sm btn-outline-danger" href="delete.php?id={{ book.id|e('url') }}">Delete</a>
+</td>
 </tr>
-        
+
 {% endfor %}
-    
+</tbody>
 </table>
+</div>
+</div>
 {% endblock %}

@@ -9,9 +9,21 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+{% block nav %}
+<nav class="navbar top-bar mb-4">
+<div class="container">
+<a class="navbar-brand text-white" href="index.php">Book Catalogue</a>
+<div class="d-flex flex-wrap gap-3">
+<a class="nav-link text-white" href="index.php">All books</a>
+<a class="nav-link text-white" href="search.php">Search</a>
+<a class="nav-link text-white" href="add.php">Add a book</a>
+<a class="nav-link text-white" href="logout.php">Log out</a>
+</div>
+</div>
+</nav>
+{% endblock %}
 
 <div class="container my-4">
-
 {% block content %}{% endblock %}
 </div>
 </body>
